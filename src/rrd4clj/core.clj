@@ -97,7 +97,7 @@
   ([#^String path #^String external-path #^RrdBackendFactory factory]
      (imported-rrd path external-path factory)))
 
-(defn #^RrdDb open-rrd
+(defn #^RrdDb instantiate-rrd
   "Opens the RRD object which already exists on disks
    or creates new RRD object"
   [rrd]
@@ -112,16 +112,16 @@
   (data-source name ds-type 600 Double/NaN Double/NaN))
 
 (defn #^ArcDef daily-raa [#^ConsolFun cf]
-  (round-robin-archive cf 0.5 1 600))
+  (rr-archive cf 0.5 1 600))
 
 (defn #^ArcDef weekly-raa [#^ConsolFun cf]
-  (round-robin-archive cf 0.5 6 700))
+  (rr-archive cf 0.5 6 700))
 
 (defn #^ArcDef monthly-raa [#^ConsolFun cf]
-  (round-robin-archive cf 0.5 24 775))
+  (rr-archive cf 0.5 24 775))
 
 (defn #^ArcDef yearly-raa [#^ConsolFun cf]
-  (round-robin-archive cf 0.5 288 797))
+  (rr-archive cf 0.5 288 797))
 
 (def default-rr-archives
   (for [consol-fn (list AVERAGE MAX MIN)
@@ -132,7 +132,14 @@
 (defn get-sample [rrd]
   (.createSample rrd))
 
-(defn sample [] )
+(defn- add-sample [sample val]
+  (doto sample
+    (.setTime (:time val))
+    (.setValues (into-array Double/TYPE
+                            (:values val)))))
+
+(defn sample [#^long time & values]
+  {:time time, :values values})
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; I/O operations
@@ -151,7 +158,7 @@
   (cond
     (= (count bindings) 0) `(do ~@body)
     (symbol? (bindings 0)) (let [[sym rrd-obj & rest] bindings]
-                             `(let [~sym (open-rrd ~rrd-obj)]
+                             `(let [~sym (instantiate-rrd ~rrd-obj)]
                                 (try (with-rrd ~(vec rest) ~@body)
                                      (finally
                                       (.close ~(bindings 0))))))
@@ -159,8 +166,11 @@
                    "with-rrd only allows Symbols in bindings"))))
 
 ;; updates with io
-(defmacro dosample [& samples]
-  samples)
+(defn update [rrd & samples]
+  (let [smpl (get-sample rrd)]
+    (doseq [s samples]
+      (add-sample smpl s))
+    (.update smpl)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tests
@@ -177,7 +187,7 @@
 ;;
 ;; (with-rrd
 ;;   [rrd (create-rrd some-definition)
-;;   (dosample rrd
+;;   (update rrd
 ;;     (sample t values)
 ;;     (sample t values)
 ;;     (sample t values)))
