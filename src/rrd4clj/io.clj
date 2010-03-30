@@ -2,17 +2,15 @@
   (:refer-clojure :exclude [deftype])
   (:use rrd4clj.core
         rrd4clj.imports)
-  (:use clojure.contrib.types)
-  )
+  (:use clojure.contrib.types))
 
 (import-all)
 
 ;; Private utilities
-(defn- #^RrdDb instantiate-rrd
+(defn #^RrdDb instantiate-rrd
   "Opens the RRD object which already exists on disks
    or creates new RRD object"
   [rrd]
-  {:pre [(= (type rrd) ::rrd)]}
   (match rrd
     (created-rrd d f)    (if (nil? f) (RrdDb. d)   (RrdDb. d f))
     (opend-rrd p r f)    (if (nil? f) (RrdDb. p r) (RrdDb. p r f))
