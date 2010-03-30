@@ -7,5 +7,5 @@
   :dev-dependencies [[leiningen/lein-swank "1.1.0"]
                      [lein-clojars "0.5.0-SNAPSHOT"]
                      [autodoc "0.7.0"]]
-  :namespaces [rrd4clj]
+  :namespaces [rrd4clj.core rrd4clj.io]
   )
