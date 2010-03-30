@@ -50,8 +50,9 @@
     :else (throw (IllegalArgumentException.
                    "with-rrd only allows Symbols in bindings"))))
 
-(defn update [rrd & samples]
+(defn update
   "Updates RRD"
+  [rrd & samples]
   (let [smpl (get-sample rrd)]
     (doseq [s samples]
       (add-sample smpl s))
