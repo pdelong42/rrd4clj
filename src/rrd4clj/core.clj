@@ -1,3 +1,4 @@
+
 (ns rrd4clj.core
   (:refer-clojure :exclude (deftype))
   (:use clojure.contrib.import-static
@@ -75,13 +76,13 @@
   (opend-rrd path read-only factory)
   (imported-rrd path external-path factory))
 
-(defn #^::rrd create-rrd
+(defn #^::rrd create
   ([#^RrdDef rrd-def]
      (created-rrd rrd-def nil))
   ([#^RrdDef rrd-def #^RrdBackendFactory factory]
      (created-rrd rrd-def factory)))
 
-(defn #^::rrd open-rrd
+(defn #^::rrd open
   ([#^String path]
      (opend-rrd path false nil))
   ([#^String path second]
@@ -91,7 +92,7 @@
   ([#^String path read-only factory]
      (opend-rrd path read-only factory)))
 
-(defn #^::rrd import-rrd
+(defn #^::rrd import-to
   ([#^String path #^String external-path]
      (imported-rrd path external-path nil))
   ([#^String path #^String external-path #^RrdBackendFactory factory]
@@ -172,32 +173,32 @@
       (add-sample smpl s))
     (.update smpl)))
 
+(defn fetch
+  [#^RrdDb rrd
+   #^ConsolFun consol-fn
+   #^long start-time
+   #^long end-time]
+  (.fetchData (.createFetchRequest rrd consol-fn start-time end-time)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tests
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn create-test []
-  (with-rrd
-    [rrd (create-rrd (rrd-def "/tmp/hoge.rrd"
-                       (data-source "sun" GAUGE 600 0 Double/NaN)
-                       (data-source "shade" GAUGE 600 0 Double/NaN)
-                       default-rr-archives))]
-    rrd))
+  (with-rrd [rrd (create (rrd-def "/tmp/hoge.rrd"
+                           (data-source "sun" GAUGE 600 0 Double/NaN)
+                           (data-source "shade" GAUGE 600 0 Double/NaN)
+                           default-rr-archives))]
+    (fetch rrd AVERAGE (getTimestamp) (getTimestamp))))
 
-;;
-;; (with-rrd
-;;   [rrd (create-rrd some-definition)
-;;   (update rrd
-;;     (sample t values)
-;;     (sample t values)
-;;     (sample t values)))
-;;   
-            
-;; (defn update []
-;;   (let [rrd-db (RrdDb. "/tmp/hoge.rrd")
-;;         sample (.createSample rrd-db)]
-;;     (doto sample
-;;       (.setTime (getTimestamp 2003 4 1))
-;;       (.setValue "sun" 0)
-;;       (.setValue "shade" 1)
-;;     )))
+(defn update-test []
+  (with-rrd [rrd (open "/tmp/hoge.rrd")]
+    (.getInfo rrd)
+    (let [now (getTimestamp)]
+      (update rrd
+        (sample (- now 1800)  10  10)
+        (sample (- now 1200)  20  30)
+        (sample (- now 600)   50  80)
+        (sample now          130 210))
+      (fetch rrd AVERAGE (- now 1800) now))))
+
