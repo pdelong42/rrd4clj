@@ -1,8 +1,8 @@
 (ns rrd4clj.core
   (:refer-clojure :exclude (deftype))
   (:use rrd4clj.imports)
-  (:use [clojure.contrib.types :only (deftype defadt match)]
-        funky))
+  (:use [clojure.contrib.types :only (deftype defadt match)])
+  (:use funky))
 
 (import-all)
 
@@ -11,7 +11,7 @@
 ;;
 (defmulti add-elem
   {:private true}
-  (fn [_ content] (class content)))
+  (fn [_ elem] (class elem)))
 
 (defmethod add-elem DsDef
   [this data-source]
@@ -59,11 +59,11 @@
   (fnk [path
         :start-time nil
         :step RrdDef/DEFAULT_STEP
-        & ds&raa]
+        & more]
     (let [rrd-def (if start-time
                     (RrdDef. path start-time step)
                     (RrdDef. path step))]
-      (doseq [x ds&raa] (add-elem rrd-def x))
+      (doseq [x more] (add-elem rrd-def x))
       rrd-def)))
 
 (defn #^::rrd create

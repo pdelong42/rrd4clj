@@ -64,3 +64,8 @@
    #^long end-time]
   (.fetchData
    (.createFetchRequest rrd consol-fn start-time end-time)))
+
+(defn draw
+  "Draws a graph"
+  [#^RrdGraphDef gr]
+  (RrdGraph. gr))
