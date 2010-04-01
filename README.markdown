@@ -12,9 +12,9 @@ To include rrd4clj in your Leiningen proejct, add the following dependency to yo
 Documentation
 -------------
 
-- http://maoe.github.com/rrd4clj/
+- [API Reference](http://maoe.github.com/rrd4clj/autodoc/)
+- [MinMax demo](http://github.com/maoe/rrd4clj/blob/master/src/clj/rrd4clj/examples.clj)
 
-Custom RRD4J
 -------------
 
 [RRD4J used in rrd4clj](http://github.com/maoe/rrd4j) has been modified from
