@@ -58,12 +58,13 @@
         :force-rules-legend false
         :title ""
         :step nil
-        :small-font (Font. "MonoSpaced", Font/PLAIN, 10)
-        :large-font (Font. "MonoSpaced", Font/BOLD, 12)
+        :small-font nil
+        :large-font nil
         :draw-x-grid true
         :draw-y-grid true
         :image-quality RrdGraphDef/DEFAULT_IMAGE_QUALITY
         :anti-aliasing true
+        :text-anti-aliasing true
         :show-signature true
         :first-day-of-week nil
         & more]
@@ -72,11 +73,12 @@
         (.setFilename path)
         (.setTimeSpan start-time end-time)
         (.setAntiAliasing anti-aliasing)
+        (.setTextAntiAliasing text-anti-aliasing)
         (.setTitle title)
         (.setHeight height)
         (.setWidth width)
-        (.setSmallFont small-font)
-        (.setLargeFont large-font)
+        (if small-font (.setSmallFont small-font))
+        (if large-font (.setLargeFont large-font))
         (.setImageFormat image-format))
       (doseq [x more] (add x gr-def))
       gr-def)))

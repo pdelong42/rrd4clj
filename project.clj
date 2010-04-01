@@ -8,9 +8,7 @@
                      [lein-clojars "0.5.0-SNAPSHOT"]
                      [autodoc "0.7.0"]
                      [lein-javac "0.0.2-SNAPSHOT"]]
-  :namespaces [rrd4clj.core rrd4clj.io rrd4clj.examples]
   :source-path "src/clj"
   :java-source-path "src/java"
-  :javac-fork "true"
-  :main rrd4clj.examples
-  )
+  :main rrd4clj.examples)
+

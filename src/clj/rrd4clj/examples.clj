@@ -50,9 +50,6 @@
                       :start-time start
                       :end-time (+ start 86400)
                       :title "rrd4clj's MINMAX demo"
-                      :large-font (Font. "Consolas" Font/PLAIN 12)
-                      :small-font (Font. "Consolas" Font/PLAIN 10)
-                      :anti-aliasing true
                       (gr-data-source "a" rrd-path "a" AVERAGE)
                       (gr-data-source "b" rrd-path "a" MIN)
                       (gr-data-source "c" rrd-path "a" MAX)
