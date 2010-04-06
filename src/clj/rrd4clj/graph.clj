@@ -10,15 +10,15 @@
 
 (deftype area [name color legend]
   RrdGraphDefMember
-  (add [gr] (.area gr name color legend)))
+  (add [x gr] (.area gr name color legend)))
 
 (deftype line [name color legend]
   RrdGraphDefMember
-  (add [gr] (.line gr name color legend)))
+  (add [x gr] (.line gr name color legend)))
 
 (deftype gr-data-source [name rrd-path ds-name consol-fun]
   RrdGraphDefMember
-  (add [gr] (.datasource gr name rrd-path ds-name consol-fun)))
+  (add [x gr] (.datasource gr name rrd-path ds-name consol-fun)))
 
 (def
   #^{:doc "Creates a new RRD Graph definition obejct"
