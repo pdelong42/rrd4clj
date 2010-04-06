@@ -2,7 +2,8 @@
   (:refer-clojure :exclude (deftype))
   (:use rrd4clj.imports)
   (:use [clojure.contrib.types :only (deftype defadt match)])
-  (:use funky))
+  (:use funky)
+  (:import java.io.File))
 
 (import-all)
 
@@ -83,6 +84,19 @@
        (opend-rrd path false second)))
   ([#^String path read-only factory]
      (opend-rrd path read-only factory)))
+
+(defn #^::rrd create-or-open
+  "Creates if specified rrd doesn't exists, or opens it"
+  ([#^RrdDef rrd-def]
+     (let [path (File. (.getPath rrd-def))]
+       (if (.exists path)
+         (open path)
+         (create rrd-def))))
+  ([#^RrdDef rrd-def #^RrdBackendFactory factory]
+     (let [path (File. (.getPath rrd-def))]
+       (if (.exists path)
+         (open path factory)
+         (create rrd-def factory)))))
 
 (defn #^::rrd import-to
   "Imports RRD or XML and copy it to new RRD object"
