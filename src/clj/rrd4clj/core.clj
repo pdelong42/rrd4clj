@@ -29,7 +29,7 @@
 
 (defadt ::rrd
   (created-rrd rrd-def factory)
-  (opend-rrd path read-only factory)
+  (opened-rrd path read-only factory)
   (imported-rrd path external-path factory))
 
 ;;
@@ -77,26 +77,26 @@
 (defn #^::rrd open
   "Opens the existing RRD object"
   ([#^String path]
-     (opend-rrd path false nil))
+     (opened-rrd path false nil))
   ([#^String path second]
-     (if (= (class second) Boolean)
-       (opend-rrd path second nil)
-       (opend-rrd path false second)))
+     (if (instance? Boolean second)
+       (opened-rrd path second nil)
+       (opened-rrd path false second)))
   ([#^String path read-only factory]
-     (opend-rrd path read-only factory)))
+     (opened-rrd path read-only factory)))
 
 (defn #^::rrd create-or-open
   "Creates if specified rrd doesn't exists, or opens it"
   ([#^RrdDef rrd-def]
-     (let [path (File. (.getPath rrd-def))]
-       (if (.exists path)
+     (let [path (.getPath rrd-def)]
+       (if (.exists (File. path))
          (open path)
          (create rrd-def))))
   ([#^RrdDef rrd-def #^RrdBackendFactory factory]
-     (let [path (File. (.getPath rrd-def))]
-       (if (.exists path)
-         (open path factory)
-         (create rrd-def factory)))))
+     (let [path (.getPath rrd-def)]
+       (if (.exists (File. path))
+         (open path)
+         (create rrd-def)))))
 
 (defn #^::rrd import-to
   "Imports RRD or XML and copy it to new RRD object"
