@@ -7,15 +7,6 @@
 (import-all)
 
 ;; Private utilities
-(defn #^RrdDb instantiate-rrd
-  "Opens the RRD object which already exists on disks
-   or creates new RRD object"
-  [rrd]
-  (match rrd
-    (created-rrd d f)    (if (nil? f) (RrdDb. d)   (RrdDb. d f))
-    (opend-rrd p r f)    (if (nil? f) (RrdDb. p r) (RrdDb. p r f))
-    (imported-rrd p e f) (if (nil? f) (RrdDb. p e) (RrdDb. p e f))))
-
 (defn- get-sample [rrd]
   (.createSample rrd))
 
@@ -41,7 +32,7 @@
   (cond
     (= (count bindings) 0) `(do ~@body)
     (symbol? (bindings 0)) (let [[sym rrd-obj & rest] bindings]
-                             `(let [~sym (instantiate-rrd ~rrd-obj)]
+                             `(let [~sym (instantiate ~rrd-obj)]
                                 (try (with-rrd ~(vec rest) ~@body)
                                      (finally
                                       (.close ~(bindings 0))))))

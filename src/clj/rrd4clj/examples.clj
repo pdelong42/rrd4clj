@@ -26,7 +26,7 @@
         rrd-path (demo-path "minmax.rrd")
         graph-path (demo-path "minmax.png")]
     ;; create
-    (with-rrd [rrd (create (rrd-def rrd-path
+    (with-rrd [rrd (NewRrd (rrd-def rrd-path
                              :start-time (- start 1)
                              :step 300
                              (data-source "a" GAUGE 600 Double/NaN Double/NaN)
@@ -39,8 +39,8 @@
           (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
 
       ;; fetch
-      ;; (println
-      ;;   (fetch rrd AVERAGE start end))
+      (println
+        (fetch rrd AVERAGE start end))
 
       ;; graph
       (let [gr (graph graph-path

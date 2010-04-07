@@ -1,8 +1,6 @@
 (ns rrd4clj.core
-  (:refer-clojure :exclude (deftype))
-  (:use rrd4clj.imports)
-  (:use [clojure.contrib.types :only (deftype defadt match)])
-  (:use funky)
+  (:use rrd4clj.imports
+        funky)
   (:import java.io.File))
 
 (import-all)
@@ -27,10 +25,21 @@
   (doseq [elem elems]
     (add-elem this elem)))
 
-(defadt ::rrd
-  (created-rrd rrd-def factory)
-  (opened-rrd path read-only factory)
-  (imported-rrd path external-path factory))
+(defprotocol Rrd
+  (instantiate [this]))
+
+(deftype ExistingRrd [path read-only?] Rrd
+  (instantiate [this] (RrdDb. path read-only?)))
+
+(deftype ImportedRrd [path external-path] Rrd
+  (instantiate [this] (RrdDb. path external-path)))
+
+(deftype NewRrd [rrd-def] Rrd
+  (instantiate [this]
+    (let [path (.getPath rrd-def)]
+      (if (.exists (File. path))
+        (instantiate (ExistingRrd path false))
+        (RrdDb. rrd-def)))))
 
 ;;
 ;; Public APIs
@@ -66,44 +75,6 @@
                     (RrdDef. path step))]
       (doseq [x more] (add-elem rrd-def x))
       rrd-def)))
-
-(defn #^::rrd create
-  "Creates new RRD object"
-  ([#^RrdDef rrd-def]
-     (created-rrd rrd-def nil))
-  ([#^RrdDef rrd-def #^RrdBackendFactory factory]
-     (created-rrd rrd-def factory)))
-
-(defn #^::rrd open
-  "Opens the existing RRD object"
-  ([#^String path]
-     (opened-rrd path false nil))
-  ([#^String path second]
-     (if (instance? Boolean second)
-       (opened-rrd path second nil)
-       (opened-rrd path false second)))
-  ([#^String path read-only factory]
-     (opened-rrd path read-only factory)))
-
-(defn #^::rrd create-or-open
-  "Creates if specified rrd doesn't exists, or opens it"
-  ([#^RrdDef rrd-def]
-     (let [path (.getPath rrd-def)]
-       (if (.exists (File. path))
-         (open path)
-         (create rrd-def))))
-  ([#^RrdDef rrd-def #^RrdBackendFactory factory]
-     (let [path (.getPath rrd-def)]
-       (if (.exists (File. path))
-         (open path)
-         (create rrd-def)))))
-
-(defn #^::rrd import-to
-  "Imports RRD or XML and copy it to new RRD object"
-  ([#^String path #^String external-path]
-     (imported-rrd path external-path nil))
-  ([#^String path #^String external-path #^RrdBackendFactory factory]
-     (imported-rrd path external-path factory)))
 
 (defn sample [#^long time & values]
   "Creates new sampling object"
