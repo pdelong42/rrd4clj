@@ -43,24 +43,25 @@
         (fetch rrd AVERAGE start end))
 
       ;; graph
-      (let [gr (graph graph-path
-                      :width 450
-                      :height 250
-                      :image-format "PNG"
-                      :start-time start
-                      :end-time (+ start 86400)
-                      :title "rrd4clj's MINMAX demo"
-                      (gr-data-source "a" rrd-path "a" AVERAGE)
-                      (gr-data-source "b" rrd-path "a" MIN)
-                      (gr-data-source "c" rrd-path "a" MAX)
-                      (gr-cdef-source "d" "a,-1,*")
-                      (area "a" (Color/decode "0xb6e4") "real")
-                      (line "b" (Color/decode "0x22e9") "min")
-                      (line "c" (Color/decode "0xee22") "max")
-                      (gr-stack (area "d" (Color/decode "0xb6e4") "inv")
-                                (area "d" (Color/decode "0xfffe") "stack")
-                                (area "d" (Color/decode "0xeffe") "stack2")))]
-        (draw gr)
-        ))))
+      (draw
+       (graph graph-path
+              :width 450
+              :height 250
+              :image-format "PNG"
+              :start-time start
+              :end-time (+ start 86400)
+              :title "rrd4clj's MINMAX demo"
+              :anti-aliasing false
+              (gr-data-source "a" rrd-path "a" AVERAGE)
+              (gr-data-source "b" rrd-path "a" MIN)
+              (gr-data-source "c" rrd-path "a" MAX)
+              (gr-cdef-source "d" "a,-1,*")
+              (area "a" (Color/decode "0xb6e4") "real")
+              (line "b" (Color/decode "0x22e9") "min")
+              (line "c" (Color/decode "0xee22") "max")
+              (stack-of (area "d" (Color/decode "0xb6e4") "inv")
+                        (area "d" (Color/decode "0xfffe") "stack")
+                        (area "d" (Color/decode "0xeffe") "stack2"))))
+        )))
 
 (defn -main [] (min-max-demo))
