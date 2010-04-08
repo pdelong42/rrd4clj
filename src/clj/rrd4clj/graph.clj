@@ -1,32 +1,37 @@
 (ns rrd4clj.graph
   (:use [rrd4clj core imports])
   (:use funky)
+  (:use [clojure.contrib seq-utils])
   (:import [org.rrd4j.graph RrdGraphDef]
            [java.awt Color Font]))
 
-(defprotocol RrdGraphDefMember
+(defprotocol GraphElement
   "hogefuga"
   (add [x gr] "bakaaho"))
 
 (deftype area [name color legend]
-  RrdGraphDefMember
+  GraphElement
   (add [x gr] (.area gr name color legend)))
 
 (deftype line [name color legend]
-  RrdGraphDefMember
+  GraphElement
   (add [x gr] (.line gr name color legend)))
 
 (deftype stack [name color legend]
-  RrdGraphDefMember
+  GraphElement
   (add [x gr] (.stack gr name color legend)))
 
 (deftype gr-data-source [name rrd-path ds-name consol-fun]
-  RrdGraphDefMember
+  GraphElement
   (add [x gr] (.datasource gr name rrd-path ds-name consol-fun)))
 
 (deftype gr-cdef-source [name reverse-polish-notation]
-  RrdGraphDefMember
+  GraphElement
   (add [x gr] (.datasource gr name reverse-polish-notation)))
+
+(defmacro gr-stack [elem & more]
+  (let [follows (map (fn [[fun name color legend]] `(stack ~name ~color ~legend)) more)]
+    `(list ~elem ~@follows)))
 
 (def
   #^{:doc "Creates a new RRD Graph definition obejct"
@@ -88,5 +93,7 @@
         (if small-font (.setSmallFont small-font))
         (if large-font (.setLargeFont large-font))
         (.setImageFormat image-format))
-      (doseq [x more] (add x gr-def))
+      (doseq [x (flatten more)]
+        (println x)
+        (add x gr-def))
       gr-def)))

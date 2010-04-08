@@ -34,9 +34,9 @@
                              (rr-archive MIN 0.5 12 300)
                              (rr-archive MAX 0.5 12 300)))]
       ;; update
-      (doseq [t (range start end 300)]
-        (update rrd
-          (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
+      ;; (doseq [t (range start end 300)]
+      ;;  (update rrd
+      ;;    (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
 
       ;; fetch
       (println
@@ -57,7 +57,9 @@
                       (area "a" (Color/decode "0xb6e4") "real")
                       (line "b" (Color/decode "0x22e9") "min")
                       (line "c" (Color/decode "0xee22") "max")
-                      (area "d" (Color/decode "0xb6e4") "inv"))]
+                      (gr-stack (area "d" (Color/decode "0xb6e4") "inv")
+                                (area "d" (Color/decode "0xfffe") "stack")
+                                (area "d" (Color/decode "0xeffe") "stack2")))]
         (draw gr)
         ))))
 
