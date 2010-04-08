@@ -53,9 +53,11 @@
                       (gr-data-source "a" rrd-path "a" AVERAGE)
                       (gr-data-source "b" rrd-path "a" MIN)
                       (gr-data-source "c" rrd-path "a" MAX)
+                      (gr-cdef-source "d" "a,-1,*")
                       (area "a" (Color/decode "0xb6e4") "real")
                       (line "b" (Color/decode "0x22e9") "min")
-                      (line "c" (Color/decode "0xee22") "max"))]
+                      (line "c" (Color/decode "0xee22") "max")
+                      (area "d" (Color/decode "0xb6e4") "inv"))]
         (draw gr)
         ))))
 

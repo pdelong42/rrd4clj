@@ -20,6 +20,10 @@
   RrdGraphDefMember
   (add [x gr] (.datasource gr name rrd-path ds-name consol-fun)))
 
+(deftype gr-cdef-source [name reverse-polish-notation]
+  RrdGraphDefMember
+  (add [x gr] (.datasource gr name reverse-polish-notation)))
+
 (def
   #^{:doc "Creates a new RRD Graph definition obejct"
      :arglists '()}
