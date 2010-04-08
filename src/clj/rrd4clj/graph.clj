@@ -16,6 +16,10 @@
   RrdGraphDefMember
   (add [x gr] (.line gr name color legend)))
 
+(deftype stack [name color legend]
+  RrdGraphDefMember
+  (add [x gr] (.stack gr name color legend)))
+
 (deftype gr-data-source [name rrd-path ds-name consol-fun]
   RrdGraphDefMember
   (add [x gr] (.datasource gr name rrd-path ds-name consol-fun)))
