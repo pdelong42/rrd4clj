@@ -29,9 +29,13 @@
   GraphElement
   (add [x gr] (.datasource gr name reverse-polish-notation)))
 
-(defmacro gr-stack [elem & more]
-  (let [follows (map (fn [[fun name color legend]] `(stack ~name ~color ~legend)) more)]
-    `(list ~elem ~@follows)))
+(defmacro gr-stack
+  ([s] (if (or (vector? s) (seq? s))
+         `(gr-stack ~@s)
+         (throw "Illegal arguments")))
+  ([elem & more]
+     (let [follows (map (fn [[fun name color legend]] `(stack ~name ~color ~legend)) more)]
+       `(list ~elem ~@follows))))
 
 (def
   #^{:doc "Creates a new RRD Graph definition obejct"
