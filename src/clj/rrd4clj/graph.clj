@@ -2,40 +2,58 @@
   (:use [rrd4clj core imports])
   (:use funky)
   (:use [clojure.contrib seq-utils])
+  (:require [clojure.zip :as z])
   (:import [org.rrd4j.graph RrdGraphDef]
            [java.awt Color Font]))
 
 (defprotocol GraphElement
-  (add [x gr])
-  (toStack [x]))
+  (add [x gr] "add"))
 
-(deftype stack [name color legend]
+(defprotocol SourcedGraphElement
+  (stack [x] "boolean"))
+
+(deftype Stack [name color legend]
   GraphElement
   (add [x gr] (.stack gr name color legend))
-  (toStack [x] x))
+  SourcedGraphElement
+  (stack [x] x))
 
-(deftype area [name color legend]
+(deftype Area [name color legend]
   GraphElement
   (add [x gr] (.area gr name color legend))
-  (toStack [x] (stack name color legend)))
+  SourcedGraphElement
+  (stack [x] (Stack name color legend)))
 
-(deftype line [name color legend]
+(deftype Line [name color legend]
   GraphElement
   (add [x gr] (.line gr name color legend))
-  (toStack [x] (stack name color legend)))
+  SourcedGraphElement
+  (stack [x] (Stack name color legend)))
 
-(deftype gr-data-source [name rrd-path ds-name consol-fun]
+(deftype DataSource [name rrd-path ds-name consol-fun]
   GraphElement
-  (add [x gr] (.datasource gr name rrd-path ds-name consol-fun))
-  (toStack [x] x))
+  (add [x gr] (.datasource gr name rrd-path ds-name consol-fun)))
 
-(deftype gr-cdef-source [name reverse-polish-notation]
+(deftype CDefSource [name reverse-polish-notation]
   GraphElement
-  (add [x gr] (.datasource gr name reverse-polish-notation))
-  (toStack [x] x))
+  (add [x gr] (.datasource gr name reverse-polish-notation)))
 
-(defn stack-of [elem & more]
-  (cons elem (map #(toStack %) more)))
+(defn- sourced? [elem]
+  (instance? rrd4clj.graph.SourcedGraphElement elem))
+
+(defn stack-of [& elems]
+  (let [z (z/seq-zip elems)]
+    (loop [loc (z/next z) replace? false]
+      (cond
+        (z/end? loc) (z/root loc)
+        replace?
+          (if (sourced? (z/node loc))
+            (recur (z/next (z/edit loc stack)) true)
+            (recur (z/next loc) true))
+        :else
+          (if (sourced? (z/node loc))
+            (recur (z/next loc) true)
+            (recur (z/next loc) false))))))
 
 (def
   #^{:doc "Creates a new RRD Graph definition obejct"

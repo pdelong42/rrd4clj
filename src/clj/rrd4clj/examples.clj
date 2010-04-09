@@ -34,9 +34,9 @@
                              (rr-archive MIN 0.5 12 300)
                              (rr-archive MAX 0.5 12 300)))]
       ;; update
-      ;; (doseq [t (range start end 300)]
-      ;;  (update rrd
-      ;;    (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
+      (doseq [t (range start end 300)]
+       (update rrd
+         (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
 
       ;; fetch
       (println
@@ -52,16 +52,16 @@
               :end-time (+ start 86400)
               :title "rrd4clj's MINMAX demo"
               :anti-aliasing false
-              (gr-data-source "a" rrd-path "a" AVERAGE)
-              (gr-data-source "b" rrd-path "a" MIN)
-              (gr-data-source "c" rrd-path "a" MAX)
-              (gr-cdef-source "d" "a,-1,*")
-              (area "a" (Color/decode "0xb6e4") "real")
-              (line "b" (Color/decode "0x22e9") "min")
-              (line "c" (Color/decode "0xee22") "max")
-              (stack-of (area "d" (Color/decode "0xb6e4") "inv")
-                        (area "d" (Color/decode "0xfffe") "stack")
-                        (area "d" (Color/decode "0xeffe") "stack2"))))
+              (DataSource "a" rrd-path "a" AVERAGE)
+              (DataSource "b" rrd-path "a" MIN)
+              (DataSource "c" rrd-path "a" MAX)
+              (CDefSource "d" "a,-1,*")
+              (Area "a" (Color/decode "0xb6e4") "real")
+              (Line "b" (Color/decode "0x22e9") "min")
+              (Line "c" (Color/decode "0xee22") "max")
+              (stack-of (Area "d" (Color/decode "0xb6e4") "inv")
+                        (Area "d" (Color/decode "0xfffe") "stack")
+                        (Area "d" (Color/decode "0xeffe") "stack2"))))
         )))
 
 (defn -main [] (min-max-demo))
