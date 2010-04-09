@@ -6,32 +6,36 @@
            [java.awt Color Font]))
 
 (defprotocol GraphElement
-  "hogefuga"
-  (add [x gr] "bakaaho"))
-
-(deftype area [name color legend]
-  GraphElement
-  (add [x gr] (.area gr name color legend)))
-
-(deftype line [name color legend]
-  GraphElement
-  (add [x gr] (.line gr name color legend)))
+  (add [x gr])
+  (toStack [x]))
 
 (deftype stack [name color legend]
   GraphElement
-  (add [x gr] (.stack gr name color legend)))
+  (add [x gr] (.stack gr name color legend))
+  (toStack [x] x))
+
+(deftype area [name color legend]
+  GraphElement
+  (add [x gr] (.area gr name color legend))
+  (toStack [x] (stack name color legend)))
+
+(deftype line [name color legend]
+  GraphElement
+  (add [x gr] (.line gr name color legend))
+  (toStack [x] (stack name color legend)))
 
 (deftype gr-data-source [name rrd-path ds-name consol-fun]
   GraphElement
-  (add [x gr] (.datasource gr name rrd-path ds-name consol-fun)))
+  (add [x gr] (.datasource gr name rrd-path ds-name consol-fun))
+  (toStack [x] x))
 
 (deftype gr-cdef-source [name reverse-polish-notation]
   GraphElement
-  (add [x gr] (.datasource gr name reverse-polish-notation)))
+  (add [x gr] (.datasource gr name reverse-polish-notation))
+  (toStack [x] x))
 
 (defn stack-of [elem & more]
-  (let [follows (map #(stack (:name %) (:color %) (:legend %)) more)]
-    (cons elem follows)))
+  (cons elem (map #(toStack %) more)))
 
 (def
   #^{:doc "Creates a new RRD Graph definition obejct"
