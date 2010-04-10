@@ -48,19 +48,7 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
-      <a href="#rrd4clj.core/create">create</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#rrd4clj.core/create-or-open">create-or-open</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#rrd4clj.core/data-source">data-source</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#rrd4clj.core/import-to">import-to</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#rrd4clj.core/open">open</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#rrd4clj.core/rr-archive">rr-archive</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#rrd4clj.core/rrd-def">rrd-def</a>
+      <a href="#rrd4clj.core/rrd">rrd</a>
     </div>
     <br />
   </div>
@@ -80,68 +68,9 @@ by <span id="author">Unknown</span><br />
 <div id="var-entry">
   <br />
   <hr />
-  <h2 id="rrd4clj.core/create">create</h2>
+  <h2 id="rrd4clj.core/rrd">rrd</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (create rrd-def)
-       (create rrd-def factory)
-</pre>
-  <pre id="var-docstr">Creates new RRD object</pre>
-  
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="rrd4clj.core/create-or-open">create-or-open</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (create-or-open rrd-def)
-       (create-or-open rrd-def factory)
-</pre>
-  <pre id="var-docstr">Creates if specified rrd doesn't exists, or opens it</pre>
-  
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="rrd4clj.core/data-source">data-source</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (data-source ds-name ds-type heartbeat min-value max-value)
-</pre>
-  <pre id="var-docstr">Creates new data source definition object</pre>
-  
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="rrd4clj.core/import-to">import-to</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (import-to path external-path)
-       (import-to path external-path factory)
-</pre>
-  <pre id="var-docstr">Imports RRD or XML and copy it to new RRD object</pre>
-  
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="rrd4clj.core/open">open</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (open path)
-       (open path second)
-       (open path read-only factory)
-</pre>
-  <pre id="var-docstr">Opens the existing RRD object</pre>
-  
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="rrd4clj.core/rr-archive">rr-archive</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (rr-archive consol-fun xff steps rows)
-</pre>
-  <pre id="var-docstr">Creates new round-robin archive definition object</pre>
-  
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="rrd4clj.core/rrd-def">rrd-def</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (rrd-def path :start-time time :step step &amp; ds&amp;raa)
+  <pre id="var-usage">Usage: (rrd path :start-time time :step step &amp; ds+raa)
 </pre>
   <pre id="var-docstr">Creates new RRD definition object</pre>
   
