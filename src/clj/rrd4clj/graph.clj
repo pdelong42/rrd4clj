@@ -121,6 +121,5 @@
         (if large-font (.setLargeFont large-font))
         (.setImageFormat image-format))
       (doseq [x (flatten more)]
-        (println x)
         (add x gr-def))
       gr-def)))
