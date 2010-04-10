@@ -1,5 +1,4 @@
 (ns rrd4clj.graph
-  (:use [rrd4clj core imports])
   (:use funky)
   (:use [clojure.contrib seq-utils])
   (:require [clojure.zip :as z])
@@ -40,6 +39,12 @@
 
 (defn- sourced? [elem]
   (instance? rrd4clj.graph.SourcedGraphElement elem))
+
+;; public API
+(def area Area)
+(def line Line)
+(def data-source DataSource)
+(def cdef-source CDefSource)
 
 (defn stack-of [& elems]
   (let [z (z/seq-zip elems)]

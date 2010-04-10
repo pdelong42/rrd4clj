@@ -10,5 +10,6 @@
                      [lein-javac "0.0.2-SNAPSHOT"]]
   :source-path "src/clj"
   :java-source-path "src/java"
-  :main rrd4clj.examples)
+  :main rrd4clj.examples
+  :namespaces [rrd4clj.examples rrd4clj.core rrd4clj.io])
 

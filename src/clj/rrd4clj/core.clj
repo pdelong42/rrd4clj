@@ -5,77 +5,52 @@
 
 (import-all)
 
-;;
-;; Private utilities
-;;
-(defmulti add-elem
-  {:private true}
-  (fn [_ elem] (class elem)))
+;; DataSources and RoundRobinArchives
+(defprotocol RRDElement
+  (add [x rrd]))
 
-(defmethod add-elem DsDef
-  [this data-source]
-  (.addDatasource this data-source))
+(deftype DataSource
+  [ds-name ds-type heartbeat min-value max-value]
+  RRDElement
+  (add [ds rrd]
+    (.addDatasource rrd
+      (DsDef. (:ds-name ds)
+              (:ds-type ds)
+              (:heartbeat ds)
+              (:min-value ds)
+              (:max-value ds)))))
 
-(defmethod add-elem ArcDef
-  [this arcive]
-  (.addArchive this arcive))
+(deftype RoundRobinArchive
+  [consol-fn xff steps rows]
+  RRDElement
+  (add [arc rrd]
+    (.addArchive rrd
+      (ArcDef. (:consol-fn arc)
+               (:xff arc)
+               (:steps arc)
+               (:rows arc)))))
 
-(defmethod add-elem :default
-  [this elems]
-  (doseq [elem elems]
-    (add-elem this elem)))
+;; public API
+(def data-source
+  DataSource)
 
-(defprotocol Rrd
-  (instantiate [this]))
-
-(deftype ExistingRrd [path read-only?] Rrd
-  (instantiate [this] (RrdDb. path read-only?)))
-
-(deftype ImportedRrd [path external-path] Rrd
-  (instantiate [this] (RrdDb. path external-path)))
-
-(deftype NewRrd [rrd-def] Rrd
-  (instantiate [this]
-    (let [path (.getPath rrd-def)]
-      (if (.exists (File. path))
-        (instantiate (ExistingRrd path false))
-        (RrdDb. rrd-def)))))
-
-;;
-;; Public APIs
-;;
-
-(defn #^DsDef data-source
- "Creates new data source definition object"
-  [#^String ds-name
-   #^DsType ds-type
-   #^long heartbeat
-   #^double min-value
-   #^double max-value]
- (DsDef. ds-name ds-type heartbeat min-value max-value))
-
-(defn #^ArcDef rr-archive
-  "Creates new round-robin archive definition object"
-  [#^ConsolFun consol-fun
-   #^double xff
-   #^int steps
-   #^int rows]
-  (ArcDef. consol-fun xff steps rows))
+(def round-robin-archive
+  RoundRobinArchive)
 
 (def
   #^{:doc "Creates new RRD definition object"
-     :arglists '([path :start-time time :step step & ds&raa])}
-  rrd-def
+     :arglists '([path :start-time time :step step & ds+raa])}
+  rrd
   (fnk [path
         :start-time nil
         :step RrdDef/DEFAULT_STEP
-        & more]
+        & ds+raa]
     (let [rrd-def (if start-time
                     (RrdDef. path start-time step)
                     (RrdDef. path step))]
-      (doseq [x more] (add-elem rrd-def x))
+      (doseq [elem ds+raa]
+        (add elem rrd-def))
       rrd-def)))
 
-(defn sample [#^long time & values]
-  "Creates new sampling object"
-  {:time time, :values values})
+(defn sample [time & values]
+  {:time time :values values})
