@@ -4,7 +4,7 @@
    [  [org.clojure/clojure      "1.7.0"]
       [org.clojure/clojure-contrib "1.2.0"]
 ;      [org.clojure/clojure "1.2.0-master-SNAPSHOT"]
-;      [org.clojars.maoe/funky "0.0.6"]
+      [org.clojars.maoe/funky "0.0.6"]
       [berkeleydb/je "3.2.76"]
       [org.rrd4j/rrd4j "2.2.1"]
     ]
