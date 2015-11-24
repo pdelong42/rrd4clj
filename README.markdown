@@ -33,3 +33,5 @@ ToDo
 -------------
 
  - migrate away from clojure-contrib, since it's deprecated
+ - migrate away from maoe/funky, or fork it and maintain it yourself
+ - remove the submodule for rrd4j
