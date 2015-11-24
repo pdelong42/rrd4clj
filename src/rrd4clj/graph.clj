@@ -21,13 +21,13 @@
   GraphElement
   (add [x gr] (.area gr name color legend))
   SourcedGraphElement
-  (stack [x] (Stack name color legend)))
+  (stack [x] (->Stack name color legend)))
 
 (deftype Line [name color legend]
   GraphElement
   (add [x gr] (.line gr name color legend))
   SourcedGraphElement
-  (stack [x] (Stack name color legend)))
+  (stack [x] (->Stack name color legend)))
 
 (deftype DataSource [name rrd-path ds-name consol-fun]
   GraphElement

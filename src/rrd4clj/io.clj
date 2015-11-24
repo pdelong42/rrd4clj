@@ -42,9 +42,9 @@
 ;; io/open
 (defn open
   ([path]
-     (instantiate (OpenRRD path false)))
+     (instantiate (->OpenRRD path false)))
   ([path read-only?]
-     (instantiate (OpenRRD path read-only?))))
+     (instantiate (->OpenRRD path read-only?))))
 
 ;; io/create
 (def create
