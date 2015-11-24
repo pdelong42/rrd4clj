@@ -29,3 +29,7 @@ License
 
 Copyright (c) 2010 Mitsutoshi Aoe and released under New BSD Lisence.
 
+ToDo
+-------------
+
+ - migrate away from clojure-contrib, since it's deprecated
