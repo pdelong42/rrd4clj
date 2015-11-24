@@ -1,0 +1,115 @@
+Compiling 144 source files to /Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/target/classes
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:5: error: package com.mongodb does not exist
+import com.mongodb.BasicDBObject;
+                  ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:6: error: package com.mongodb does not exist
+import com.mongodb.DBCollection;
+                  ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:7: error: package com.mongodb does not exist
+import com.mongodb.DBObject;
+                  ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:15: error: cannot find symbol
+    private final DBCollection rrdCollection;
+                  ^
+  symbol:   class DBCollection
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:24: error: cannot find symbol
+    public RrdMongoDBBackend(String path, DBCollection rrdCollection) {
+                                          ^
+  symbol:   class DBCollection
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackendFactory.java:5: error: package com.mongodb does not exist
+import com.mongodb.BasicDBObject;
+                  ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackendFactory.java:6: error: package com.mongodb does not exist
+import com.mongodb.DBCollection;
+                  ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackendFactory.java:15: error: cannot find symbol
+    private final DBCollection rrdCollection;
+                  ^
+  symbol:   class DBCollection
+  location: class RrdMongoDBBackendFactory
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackendFactory.java:23: error: cannot find symbol
+    public RrdMongoDBBackendFactory(DBCollection rrdCollection) {
+                                    ^
+  symbol:   class DBCollection
+  location: class RrdMongoDBBackendFactory
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdNioBackend.java:9: warning: DirectBuffer is internal proprietary API and may be removed in a future release
+import sun.nio.ch.DirectBuffer;
+                 ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/data/RpnCalculator.java:11: error: package com.tomgibara.crinch.hashing does not exist
+import com.tomgibara.crinch.hashing.PerfectStringHash;
+                                   ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/data/RpnCalculator.java:633: error: cannot find symbol
+    static private final PerfectStringHash perfect;
+                         ^
+  symbol:   class PerfectStringHash
+  location: class RpnCalculator
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:28: error: cannot find symbol
+        BasicDBObject query = new BasicDBObject();
+        ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:28: error: cannot find symbol
+        BasicDBObject query = new BasicDBObject();
+                                  ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:30: error: cannot find symbol
+        DBObject rrdObject = rrdCollection.findOne(query);
+        ^
+  symbol:   class DBObject
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:52: error: cannot find symbol
+            BasicDBObject query = new BasicDBObject();
+            ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:52: error: cannot find symbol
+            BasicDBObject query = new BasicDBObject();
+                                      ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:55: error: cannot find symbol
+            DBObject rrdObject = rrdCollection.findOne(query);
+            ^
+  symbol:   class DBObject
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackend.java:57: error: cannot find symbol
+                rrdObject = new BasicDBObject();
+                                ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackend
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackendFactory.java:27: error: cannot find symbol
+        rrdCollection.ensureIndex(new BasicDBObject("path", 1));
+                                      ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackendFactory
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackendFactory.java:42: error: cannot find symbol
+        BasicDBObject query = new BasicDBObject();
+        ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackendFactory
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdMongoDBBackendFactory.java:42: error: cannot find symbol
+        BasicDBObject query = new BasicDBObject();
+                                  ^
+  symbol:   class BasicDBObject
+  location: class RrdMongoDBBackendFactory
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdNioBackend.java:71: warning: DirectBuffer is internal proprietary API and may be removed in a future release
+            if (byteBuffer instanceof DirectBuffer) {
+                                      ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/core/RrdNioBackend.java:72: warning: DirectBuffer is internal proprietary API and may be removed in a future release
+                ((DirectBuffer) byteBuffer).cleaner().clean();
+                  ^
+/Users/pdelong/Stuff/repos/github.com/pdelong42/rrd4clj/src/java/org/rrd4j/data/RpnCalculator.java:644: error: cannot find symbol
+        perfect = new PerfectStringHash(array);
+                      ^
+  symbol:   class PerfectStringHash
+  location: class RpnCalculator
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+22 errors
+3 warnings
+Compilation of Java sources(lein javac) failed.
