@@ -3,8 +3,6 @@
   (:require [rrd4clj.io :as io]
             [rrd4clj.graph :as g])
   (:use clojure.contrib.import-static)
-;  (:use clojure.contrib.duck-streams
-;        clojure.contrib.import-static)
   (:import [java.io File]
            [java.awt Color Font])
   (:gen-class))
@@ -29,7 +27,7 @@
         rrd-path   (demo-path "minmax.rrd")
         graph-path (demo-path "minmax.png")]
     ;; create
-    (io/with-rrd [rrd (rrd rrd-path
+    (io/with-rrd [rrdi (rrd rrd-path
                         :start-time (- start 1)
                         :step 300
                         (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
@@ -37,13 +35,13 @@
                         (->RoundRobinArchive MIN 0.5 12 300)
                         (->RoundRobinArchive MAX 0.5 12 300))]
       ;; update
-      (apply io/update_rrd rrd
+      (apply io/update_rrd rrdi
         (for [t (range start end 300)]
           (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
 
       ;; fetch
       ;; (println
-      ;;   (fetch rrd AVERAGE start end))
+      ;;   (fetch rrdi AVERAGE start end))
 
       ;; graph
       (io/graph
