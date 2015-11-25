@@ -32,10 +32,10 @@
     (io/with-rrd [rrd (rrd rrd-path
                         :start-time (- start 1)
                         :step 300
-                        (data-source "a" GAUGE 600 Double/NaN Double/NaN)
-                        (round-robin-archive AVERAGE 0.5 1 300)
-                        (round-robin-archive MIN 0.5 12 300)
-                        (round-robin-archive MAX 0.5 12 300))]
+                        (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
+                        (->RoundRobinArchive AVERAGE 0.5 1 300)
+                        (->RoundRobinArchive MIN 0.5 12 300)
+                        (->RoundRobinArchive MAX 0.5 12 300))]
       ;; update
       (apply io/update rrd
         (for [t (range start end 300)]
