@@ -2,8 +2,9 @@
   (:use rrd4clj.core)
   (:require [rrd4clj.io :as io]
             [rrd4clj.graph :as g])
-  (:use clojure.contrib.duck-streams
-        clojure.contrib.import-static)
+  (:use clojure.contrib.import-static)
+;  (:use clojure.contrib.duck-streams
+;        clojure.contrib.import-static)
   (:import [java.io File]
            [java.awt Color Font])
   (:gen-class))
@@ -11,7 +12,6 @@
 (import-static org.rrd4j.ConsolFun AVERAGE FIRST LAST MAX MIN TOTAL)
 (import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE)
 (import-static org.rrd4j.core.Util getTimestamp getTime)
-
 
 (defn demo-dir []
   (let [home-dir (File. (System/getProperty "user.home"))
