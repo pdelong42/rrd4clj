@@ -51,7 +51,7 @@
   (comp instantiate CreateRRD))
 
 ;; io/update
-(defn update
+(defn update_rrd
   "Updates RRD"
   [rrd & samples]
   (doseq [s samples]

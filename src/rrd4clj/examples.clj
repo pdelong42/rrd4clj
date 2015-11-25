@@ -37,7 +37,7 @@
                         (->RoundRobinArchive MIN 0.5 12 300)
                         (->RoundRobinArchive MAX 0.5 12 300))]
       ;; update
-      (apply io/update rrd
+      (apply io/update_rrd rrd
         (for [t (range start end 300)]
           (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
 
