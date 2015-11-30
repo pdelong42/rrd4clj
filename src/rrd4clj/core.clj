@@ -38,20 +38,19 @@
 (def round-robin-archive
   RoundRobinArchive)
 
-(def
+(defn rrd
   #^{:doc "Creates new RRD definition object"
      :arglists '([path :start-time time :step step & ds+raa])}
-  rrd
-  (fn [path
-        {:start-time nil
-         :step RrdDef/DEFAULT_STEP}
-        & ds+raa]
+  [path
+    {:start-time nil
+     :step RrdDef/DEFAULT_STEP}
+     & ds+raa]
     (let [rrd-def (if start-time
                     (RrdDef. path start-time step)
                     (RrdDef. path step))]
       (doseq [elem ds+raa]
         (add elem rrd-def))
-      rrd-def)))
+      rrd-def))
 
 (defn sample [time & values]
   {:time time :values values})
