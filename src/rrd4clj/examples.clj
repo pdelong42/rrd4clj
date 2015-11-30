@@ -28,41 +28,42 @@
         graph-path (demo-path "minmax.png")]
     ;; create
     (io/with-rrd [rrdi (rrd rrd-path
-                        :start-time (- start 1)
-                        :step 300
-                        (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
-                        (->RoundRobinArchive AVERAGE 0.5 1 300)
-                        (->RoundRobinArchive MIN 0.5 12 300)
-                        (->RoundRobinArchive MAX 0.5 12 300))]
-      ;; update
-      (apply io/update_rrd rrdi
-        (for [t (range start end 300)]
-          (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
-
-      ;; fetch
-      ;; (println
-      ;;   (fetch rrdi AVERAGE start end))
-
-      ;; graph
-      (io/graph
-        (g/graph graph-path
-          :width 450
-          :height 250
-          :image-format "PNG"
-          :start-time start
-          :end-time (+ start 86400)
-          :title "rrd4clj's MINMAX demo"
-          :anti-aliasing false
-          (g/data-source "a" rrd-path "a" AVERAGE)
-          (g/data-source "b" rrd-path "a" MIN)
-          (g/data-source "c" rrd-path "a" MAX)
-          (g/cdef-source "d" "a,-1,*")
-          (g/area "a" (Color/decode "0xb6e4") "real")
-          (g/line "b" (Color/decode "0x22e9") "min")
-          (g/line "c" (Color/decode "0xee22") "max")
-          (g/stack-of
-            (g/area "d" (Color/decode "0xb6e4") "inv")
-            (g/area "d" (Color/decode "0xfffe") "stack")
-            (g/area "d" (Color/decode "0xeffe") "stack2")))))))
+                               :start-time (- start 1)
+                               :step 300
+                               (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
+                               (->RoundRobinArchive AVERAGE 0.5 1 300)
+                               (->RoundRobinArchive MIN 0.5 12 300)
+                               (->RoundRobinArchive MAX 0.5 12 300))]
+;      ;; update
+;      (apply io/update_rrd rrdi
+;        (for [t (range start end 300)]
+;          (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))))
+;
+;      ;; fetch
+;      ;; (println
+;      ;;   (fetch rrdi AVERAGE start end))
+;
+;      ;; graph
+;      (io/graph
+;        (g/graph graph-path
+;          :width 450
+;          :height 250
+;          :image-format "PNG"
+;          :start-time start
+;          :end-time (+ start 86400)
+;          :title "rrd4clj's MINMAX demo"
+;          :anti-aliasing false
+;          (g/data-source "a" rrd-path "a" AVERAGE)
+;          (g/data-source "b" rrd-path "a" MIN)
+;          (g/data-source "c" rrd-path "a" MAX)
+;          (g/cdef-source "d" "a,-1,*")
+;          (g/area "a" (Color/decode "0xb6e4") "real")
+;          (g/line "b" (Color/decode "0x22e9") "min")
+;          (g/line "c" (Color/decode "0xee22") "max")
+;          (g/stack-of
+;            (g/area "d" (Color/decode "0xb6e4") "inv")
+;            (g/area "d" (Color/decode "0xfffe") "stack")
+;            (g/area "d" (Color/decode "0xeffe") "stack2"))))
+)))
 
 (defn -main [] (min-max-demo))

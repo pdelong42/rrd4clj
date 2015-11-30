@@ -1,5 +1,5 @@
 (ns rrd4clj.io
-  (:use funky)
+;  (:use funky)
   (:use rrd4clj.core
         rrd4clj.imports)
   (:import [org.rrd4j.core RrdDb]

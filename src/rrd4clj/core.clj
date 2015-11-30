@@ -1,6 +1,7 @@
 (ns rrd4clj.core
   (:use rrd4clj.imports
-        funky)
+;        funky
+        )
   (:import java.io.File))
 
 (import-all)
@@ -41,9 +42,9 @@
   #^{:doc "Creates new RRD definition object"
      :arglists '([path :start-time time :step step & ds+raa])}
   rrd
-  (fnk [path
-        :start-time nil
-        :step RrdDef/DEFAULT_STEP
+  (fn [path
+        {:start-time nil
+         :step RrdDef/DEFAULT_STEP}
         & ds+raa]
     (let [rrd-def (if start-time
                     (RrdDef. path start-time step)
