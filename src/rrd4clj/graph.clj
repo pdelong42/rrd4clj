@@ -1,6 +1,4 @@
 (ns rrd4clj.graph
-;  (:use funky)
-;  (:use [clojure.contrib seq-utils])
   (:require [clojure.zip :as z])
   (:import [org.rrd4j.graph RrdGraphDef]
            [java.awt Color Font]))

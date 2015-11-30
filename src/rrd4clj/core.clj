@@ -1,7 +1,5 @@
 (ns rrd4clj.core
-  (:use rrd4clj.imports
-;        funky
-        )
+  (:use rrd4clj.imports)
   (:import java.io.File))
 
 (import-all)
@@ -39,13 +37,10 @@
   RoundRobinArchive)
 
 (defn rrd
-  #^{:doc "Creates new RRD definition object"
-     :arglists '([path :start-time time :step step & ds+raa])}
-  [path
-    {:start-time nil
-     :step RrdDef/DEFAULT_STEP}
-     & ds+raa]
-    (let [rrd-def (if start-time
+   #^{:doc "Creates new RRD definition object"
+      :arglists '([path :start-time time :step step & ds+raa])}
+   [path { :start-time nil :step RrdDef/DEFAULT_STEP } & ds+raa]
+   (let [rrd-def (if start-time
                     (RrdDef. path start-time step)
                     (RrdDef. path step))]
       (doseq [elem ds+raa]
