@@ -1,5 +1,5 @@
 (ns rrd4clj.examples
-  (:use rrd4clj.core)
+  (:use rrd4clj.core rrd4clj.imports)
   (:require [rrd4clj.io :as io]
             [rrd4clj.graph :as g])
   (:use clojure.contrib.import-static)
@@ -10,6 +10,8 @@
 (import-static org.rrd4j.ConsolFun AVERAGE FIRST LAST MAX MIN TOTAL)
 (import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE)
 (import-static org.rrd4j.core.Util getTimestamp getTime)
+
+(import-all)
 
 (defn demo-dir []
   (let [home-dir (File. (System/getProperty "user.home"))
@@ -22,18 +24,27 @@
   (format "%s%s%s" (demo-dir) File/separator file))
 
 (defn min-max-demo []
-  (let [start      (getTime)
-        end        (+ start (* 300 300))
-        rrd-path   (demo-path "minmax.rrd")
-        graph-path (demo-path "minmax.png")]
+   (let
+      [  start      (getTime)
+         end        (+ start (* 300 300))
+         rrd-path   (demo-path "minmax.rrd")
+         graph-path (demo-path "minmax.png")  ]
+      (let
+         [rrd-def (RrdDef. rrd-path (- start 1) 300)]
+         (.addDatasource rrd-def (DsDef. "a" GAUGE 600 Double/NaN Double/NaN))
+;         (add (->RoundRobinArchive AVERAGE 0.5 1 300) rrd-def)
+;         (add (->RoundRobinArchive MIN 0.5 12 300) rrd-def)
+;         (add (->RoundRobinArchive MAX 0.5 12 300) rrd-def)
+         rrd-def  )
+
     ;; create
-    (io/with-rrd [rrdi (rrd rrd-path
-                               :start-time (- start 1)
-                               :step 300
-                               (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
-                               (->RoundRobinArchive AVERAGE 0.5 1 300)
-                               (->RoundRobinArchive MIN 0.5 12 300)
-                               (->RoundRobinArchive MAX 0.5 12 300))]
+;    (io/with-rrd [rrdi (rrd rrd-path
+;                               :start-time (- start 1)
+;                               :step 300
+;                               (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
+;                               (->RoundRobinArchive AVERAGE 0.5 1 300)
+;                               (->RoundRobinArchive MIN 0.5 12 300)
+;                               (->RoundRobinArchive MAX 0.5 12 300))]
 ;      ;; update
 ;      (apply io/update_rrd rrdi
 ;        (for [t (range start end 300)]
@@ -64,6 +75,7 @@
 ;            (g/area "d" (Color/decode "0xb6e4") "inv")
 ;            (g/area "d" (Color/decode "0xfffe") "stack")
 ;            (g/area "d" (Color/decode "0xeffe") "stack2"))))
-)))
+;)
+))
 
 (defn -main [] (min-max-demo))
