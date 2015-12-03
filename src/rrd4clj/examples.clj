@@ -32,9 +32,9 @@
       (let
          [rrd-def (RrdDef. rrd-path (- start 1) 300)]
          (.addDatasource rrd-def (DsDef. "a" GAUGE 600 Double/NaN Double/NaN))
-;         (add (->RoundRobinArchive AVERAGE 0.5 1 300) rrd-def)
-;         (add (->RoundRobinArchive MIN 0.5 12 300) rrd-def)
-;         (add (->RoundRobinArchive MAX 0.5 12 300) rrd-def)
+         (.addArchive rrd-def (ArcDef. AVERAGE 0.5  1 300))
+         (.addArchive rrd-def (ArcDef. MIN     0.5 12 300))
+         (.addArchive rrd-def (ArcDef. MAX     0.5 12 300))
          rrd-def  )
 
     ;; create
