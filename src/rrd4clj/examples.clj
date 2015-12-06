@@ -30,47 +30,41 @@
       [  start      (getTime)
          end        (+ start (* 300 300))
          rrd-path   (demo-path "minmax.rrd")
-         graph-path (demo-path "minmax.png")  ]
+         graph-path (demo-path "minmax.png")
+         rrd-def    (RrdDef. rrd-path (- start 1) 300)  ]
+      (.addDatasource rrd-def (DsDef. "a" GAUGE 600 Double/NaN Double/NaN))
+      (.addArchive    rrd-def (ArcDef. AVERAGE 0.5  1 300))
+      (.addArchive    rrd-def (ArcDef. MIN     0.5 12 300))
+      (.addArchive    rrd-def (ArcDef. MAX     0.5 12 300))
       (let
-         [rrd-def (RrdDef. rrd-path (- start 1) 300)]
-         (.addDatasource rrd-def (DsDef. "a" GAUGE 600 Double/NaN Double/NaN))
-         (.addArchive    rrd-def (ArcDef. AVERAGE 0.5  1 300))
-         (.addArchive    rrd-def (ArcDef. MIN     0.5 12 300))
-         (.addArchive    rrd-def (ArcDef. MAX     0.5 12 300))
-         (let
-            [rrdi (RrdDb. rrd-def)]
+         [rrdi (RrdDb. rrd-def)]
 
-            ;; update
-            (apply io/update_rrd rrdi
-               (for [t (range start end 300)]
-                  (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))  )  )
+         ;; update
+         (apply io/update_rrd rrdi
+            (for [t (range start end 300)]
+               (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))  )  )
 
-            ;; fetch
-            ;(println (fetch rrdi AVERAGE start end))
+         ;; graph
+         (io/graph
+           (g/graph graph-path {
+             :width 450
+             :height 250
+             :image-format "PNG"
+             :start-time start
+             :end-time (+ start 86400)
+             :title "rrd4clj's MINMAX demo"
+             :anti-aliasing false
+}
+             (g/->DataSource "a" rrd-path "a" AVERAGE)
+             (g/->DataSource "b" rrd-path "a" MIN)
+             (g/->DataSource "c" rrd-path "a" MAX)
+             (g/->CDefSource "d" "a,-1,*")
+             (g/->Area "a" (Color/decode "0xb6e4") "real")
+             (g/->Line "b" (Color/decode "0x22e9") "min")
+             (g/->Line "c" (Color/decode "0xee22") "max")
+             (g/stack-of
+               (g/->Area "d" (Color/decode "0xb6e4") "inv")
+               (g/->Area "d" (Color/decode "0xfffe") "stack")
+               (g/->Area "d" (Color/decode "0xeffe") "stack2")  )  )  )  )  )  )
 
-;      ;; graph
-;      (io/graph
-;        (g/graph graph-path
-;          :width 450
-;          :height 250
-;          :image-format "PNG"
-;          :start-time start
-;          :end-time (+ start 86400)
-;          :title "rrd4clj's MINMAX demo"
-;          :anti-aliasing false
-;          (g/data-source "a" rrd-path "a" AVERAGE)
-;          (g/data-source "b" rrd-path "a" MIN)
-;          (g/data-source "c" rrd-path "a" MAX)
-;          (g/cdef-source "d" "a,-1,*")
-;          (g/area "a" (Color/decode "0xb6e4") "real")
-;          (g/line "b" (Color/decode "0x22e9") "min")
-;          (g/line "c" (Color/decode "0xee22") "max")
-;          (g/stack-of
-;            (g/area "d" (Color/decode "0xb6e4") "inv")
-;            (g/area "d" (Color/decode "0xfffe") "stack")
-;            (g/area "d" (Color/decode "0xeffe") "stack2"))))
-;)
-
-)  )  )  )
-
-(defn -main [] (doall (min-max-demo)))
+(defn -main [] (min-max-demo))
