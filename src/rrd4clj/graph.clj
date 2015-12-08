@@ -116,21 +116,17 @@
             show-signature true
             first-day-of-week nil  }  }
       & more  ]
-    (printf "path = %s\n" path)
-    (printf "start-time = %d\n" start-time)
-    (let [gr-def (RrdGraphDef.)]
+   (let [gr-def (RrdGraphDef.)]
       (doto gr-def
-        (.setFilename path)
-;        (.setTimeSpan start-time end-time)
-;        (.setAntiAliasing anti-aliasing)
-;        (.setTextAntiAliasing text-anti-aliasing)
-        (.setTitle title)
-;        (.setHeight height)
-;        (.setWidth width)
-        (if small-font (.setSmallFont small-font))
-        (if large-font (.setLargeFont large-font))
-        (.setImageFormat image-format)
-        )
+         (.setFilename path)
+         (.setTimeSpan start-time end-time)
+         (.setAntiAliasing anti-aliasing)
+         (.setTextAntiAliasing text-anti-aliasing)
+         (.setTitle title)
+         (.setHeight height)
+         (.setWidth width)
+         (if small-font (.setSmallFont small-font))
+         (if large-font (.setLargeFont large-font))
+         (.setImageFormat image-format)  )
       (doseq [x (flatten more)] (add x gr-def))
-;      (doseq [x (flatten more)] (println x))
       gr-def))
