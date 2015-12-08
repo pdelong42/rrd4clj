@@ -46,15 +46,14 @@
 
          ;; graph
          (io/graph
-           (g/graph graph-path {
-             :width 450
-             :height 250
-             :image-format "PNG"
-             :start-time start
-             :end-time (+ start 86400)
-             :title "rrd4clj's MINMAX demo"
-             :anti-aliasing false
-}
+           (g/graph graph-path
+             {  :width 450
+                :height 250
+                :image-format "PNG"
+                :start-time start
+                :end-time (+ start 86400)
+                :title "rrd4clj's MINMAX demo"
+                :anti-aliasing false  }
              (g/->DataSource "a" rrd-path "a" AVERAGE)
              (g/->DataSource "b" rrd-path "a" MIN)
              (g/->DataSource "c" rrd-path "a" MAX)
