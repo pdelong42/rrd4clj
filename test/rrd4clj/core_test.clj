@@ -9,7 +9,7 @@
 (import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE)
 
 (deftest test-data-source
-  (let [ds (data-source "name" COUNTER 300 0 Double/NaN)]
+  (let [ds (DsDef. "name" COUNTER 300 0 Double/NaN)]
     (are [expr answer] (= expr answer)
       (class ds) DsDef)))
 
