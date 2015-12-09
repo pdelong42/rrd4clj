@@ -3,7 +3,7 @@
   (:use rrd4clj.imports)
   (:use [clojure.test]
         [clojure.contrib.import-static])
-  (:import [org.rrd4j.core DsDef ArcDef])
+  (:import [org.rrd4j.core DsDef ArcDef]))
 
 (import-static org.rrd4j.ConsolFun AVERAGE FIRST LAST MAX MIN TOTAL)
 (import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE)
