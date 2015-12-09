@@ -1,8 +1,8 @@
-pom.xml
 *jar
-lib
-classes
-autodoc/
+/.lein-failures
 /.lein-repl-history
 /target
-/.lein-failures
+autodoc/
+classes
+lib
+pom.xml
