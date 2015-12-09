@@ -5,3 +5,4 @@ classes
 autodoc/
 /.lein-repl-history
 /target
+/.lein-failures
