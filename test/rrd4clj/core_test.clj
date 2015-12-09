@@ -14,8 +14,6 @@
       (class ds) DsDef)))
 
 (deftest test-rr-archive
-  (let [rra (rr-archive AVERAGE 0.5 1 600)]
+  (let [rra (ArcDef. AVERAGE 0.5 1 600)]
     (are [expr answer] (= expr answer)
-      (class raa) ArcDef)))
-
-  
+      (class rra) ArcDef)))
