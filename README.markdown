@@ -32,8 +32,5 @@ Copyright (c) 2010 Mitsutoshi Aoe and released under New BSD Lisence.
 ToDo
 -------------
 
- - migrate away from clojure-contrib, since it's deprecated
-
- - migrate away from maoe/funky, or fork it and maintain it yourself
-
- - remove the submodule for rrd4j
+ - migrate away from clojure-contrib, since it's deprecated (mostly
+   done, but still using import-static)
