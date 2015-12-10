@@ -51,9 +51,10 @@
          (if start-time
             (RrdDef. path start-time step)
             (RrdDef. path step)  )  ]
-      (doseq [elem ds+raa]
+      (doseq
+         [elem ds+raa]
          (add elem rrd-def)  )
-      rrd-def)  )
+      (RrdDb. rrd-def)  )  )
 
 (defn sample
    [time & values]

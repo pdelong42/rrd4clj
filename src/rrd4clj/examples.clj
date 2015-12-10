@@ -1,5 +1,5 @@
 (ns rrd4clj.examples
-   (:use rrd4clj.core rrd4clj.imports)
+   (:use rrd4clj.core)
    (:require
       [rrd4clj.io    :as io]
       [rrd4clj.graph :as  g]  )
@@ -12,8 +12,6 @@
 (import-static org.rrd4j.ConsolFun AVERAGE FIRST LAST MAX MIN TOTAL)
 (import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE)
 (import-static org.rrd4j.core.Util getTimestamp getTime)
-
-(import-all)
 
 (defn demo-dir [] ; rename this to be different from the lexical below
    (let
@@ -31,15 +29,14 @@
 (defn min-max-demo [start end rrd-path graph-path]
    (let ; this line originally used io/with-rrd
       [  rrdi
-         (RrdDb.
-            (rrd_define
-               rrd-path
-               {  :start-time (dec start)
-                  :step       300  }
-               (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
-               (->RoundRobinArchive AVERAGE 0.5  1 300)
-               (->RoundRobinArchive MIN     0.5 12 300)
-               (->RoundRobinArchive MAX     0.5 12 300)  )  )  ]
+         (rrd_define
+            rrd-path
+            {  :start-time (dec start)
+               :step       300  }
+            (->DataSource "a" GAUGE 600 Double/NaN Double/NaN)
+            (->RoundRobinArchive AVERAGE 0.5  1 300)
+            (->RoundRobinArchive MIN     0.5 12 300)
+            (->RoundRobinArchive MAX     0.5 12 300)  )  ]
 
       (apply io/rrd_update rrdi
          (for
