@@ -15,7 +15,7 @@
 
 (import-all)
 
-(defn demo-dir []
+(defn demo-dir [] ; rename this to be different from the lexical below
    (let
       [  home-dir (File. (System/getProperty "user.home"))
          demo-dir (File. (format "%s%srrd4clj-demo" home-dir File/separator))  ]
@@ -32,7 +32,7 @@
    (let ; this line originally used io/with-rrd
       [  rrdi
          (RrdDb.
-            (rrd
+            (rrd_define
                rrd-path
                {  :start-time (dec start)
                   :step       300  }
@@ -41,13 +41,14 @@
                (->RoundRobinArchive MIN     0.5 12 300)
                (->RoundRobinArchive MAX     0.5 12 300)  )  )  ]
 
-      (apply io/update_rrd rrdi
+      (apply io/rrd_update rrdi
          (for
             [t (range start end 300)]
             (sample t (+ 50 (* 50 (Math/sin (/ t 3000.0)))))  )  )
 
-      (io/graph
-         (g/graph graph-path
+      (io/rrd_graph
+         (g/graph
+            graph-path
             {  :width 450
                :height 250
                :image-format "PNG"

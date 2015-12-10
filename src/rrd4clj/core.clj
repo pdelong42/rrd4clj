@@ -37,7 +37,7 @@
 
 (def round-robin-archive RoundRobinArchive)
 
-(defn rrd
+(defn rrd_define
    #^{:doc "Creates new RRD definition object"
       :arglists '([path :start-time time :step step & ds+raa])}
    [  path
