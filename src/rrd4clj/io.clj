@@ -1,10 +1,8 @@
 (ns rrd4clj.io
-;  (:use funky)
-  (:use rrd4clj.core
-        rrd4clj.imports)
-  (:import [org.rrd4j.core RrdDb]
-           [java.io File IOException]
-           [java.lang IllegalArgumentException]))
+   (:use rrd4clj.core rrd4clj.imports)
+   (:import
+      [java.io File IOException]
+      [java.lang IllegalArgumentException]  )  )
 
 (import-all)
 
