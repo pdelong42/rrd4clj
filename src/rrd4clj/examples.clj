@@ -26,7 +26,8 @@
    [file]
    (format "%s%s%s" (demo-dir) File/separator file)  )
 
-(defn min-max-demo [start end rrd-path graph-path]
+(defn min-max-demo
+   [start end rrd-path graph-path]
    (let ; this line originally used io/with-rrd
       [  rrdi
          (rrd_define
