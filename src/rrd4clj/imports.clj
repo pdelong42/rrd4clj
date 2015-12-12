@@ -1,8 +1,8 @@
-(ns rrd4clj.imports
-   (:use clojure.contrib.import-static)  )
+(ns rrd4clj.imports)
 
-(defn import-all []
-  (import '[org.rrd4j.core ArcDef DsDef RrdDb RrdDef Sample]
-          '[org.rrd4j.graph RrdGraph RrdGraphDef])
-  (import-static org.rrd4j.ConsolFun AVERAGE FIRST LAST MAX MIN TOTAL)
-  (import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE))
+(defmacro import-statics []
+  '(do
+      (use 'clojure.contrib.import-static)
+      (import-static org.rrd4j.ConsolFun AVERAGE FIRST LAST MAX MIN TOTAL)
+      (import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE)
+      (import-static org.rrd4j.core.Util getTimestamp getTime)  )  )

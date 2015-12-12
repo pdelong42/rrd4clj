@@ -1,10 +1,14 @@
 (ns rrd4clj.io
-   (:use rrd4clj.core rrd4clj.imports)
+   (:use
+      rrd4clj.core
+      rrd4clj.imports  )
    (:import
       [java.io File IOException]
-      [java.lang IllegalArgumentException]  )  )
+      [java.lang IllegalArgumentException]
+      [org.rrd4j.core RrdDb]
+      [org.rrd4j.graph RrdGraph RrdGraphDef]  )  )
 
-(import-all)
+(import-statics)
 
 ;; (defn rrd_fetch
 ;;   "Fetches data from RRD"

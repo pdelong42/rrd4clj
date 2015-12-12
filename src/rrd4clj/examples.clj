@@ -1,17 +1,16 @@
 (ns rrd4clj.examples
-   (:use rrd4clj.core)
+   (:use
+      rrd4clj.core
+      rrd4clj.imports  )
    (:require
       [rrd4clj.io    :as io]
       [rrd4clj.graph :as  g]  )
-   (:use clojure.contrib.import-static)
    (:import
       [java.awt Color Font]
       [java.io File]  )
    (:gen-class)  )
 
-(import-static org.rrd4j.ConsolFun AVERAGE FIRST LAST MAX MIN TOTAL)
-(import-static org.rrd4j.DsType ABSOLUTE COUNTER DERIVE GAUGE)
-(import-static org.rrd4j.core.Util getTimestamp getTime)
+(import-statics)
 
 (defn demo-dir [] ; rename this to be different from the lexical below
    (let

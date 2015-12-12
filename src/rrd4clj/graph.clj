@@ -1,13 +1,12 @@
 (ns rrd4clj.graph
-  (:require [clojure.zip :as z])
-  (:import [org.rrd4j.graph RrdGraphDef]
-           [java.awt Color Font]))
+   (:require [clojure.zip :as z])
+   (:import
+      [java.awt Color Font]
+      [org.rrd4j.graph RrdGraphDef]  )  )
 
-(defprotocol GraphElement
-  (add [x gr] "add"))
+(defprotocol GraphElement (add [x gr] "add"))
 
-(defprotocol SourcedGraphElement
-  (stack [x] "boolean"))
+(defprotocol SourcedGraphElement (stack [x] "boolean"))
 
 (deftype Stack [name color legend]
   GraphElement

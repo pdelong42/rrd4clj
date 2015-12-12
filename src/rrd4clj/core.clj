@@ -1,8 +1,10 @@
 (ns rrd4clj.core
   (:use rrd4clj.imports)
-  (:import java.io.File))
+  (:import
+     [java.io.File]
+     [org.rrd4j.core ArcDef DsDef RrdDb RrdDef]  )  )
 
-(import-all)
+(import-statics)
 
 ;; DataSources and RoundRobinArchives
 (defprotocol RRDElement (add [x rrd]))
