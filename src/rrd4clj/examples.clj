@@ -7,7 +7,8 @@
       [rrd4clj.graph :as  g]  )
    (:import
       [java.awt Color Font]
-      [java.io File]  )
+      java.io.File
+      org.rrd4j.core.RrdDb  )
    (:gen-class)  )
 
 (import-statics)

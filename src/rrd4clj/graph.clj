@@ -2,7 +2,7 @@
    (:require [clojure.zip :as z])
    (:import
       [java.awt Color Font]
-      [org.rrd4j.graph RrdGraphDef]  )  )
+      org.rrd4j.graph.RrdGraphDef  )  )
 
 (defprotocol GraphElement (add [x gr] "add"))
 

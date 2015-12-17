@@ -4,8 +4,8 @@
       rrd4clj.imports  )
    (:import
       [java.io File IOException]
-      [java.lang IllegalArgumentException]
-      [org.rrd4j.core RrdDb]
+      java.lang.IllegalArgumentException
+      org.rrd4j.core.RrdDb
       [org.rrd4j.graph RrdGraph RrdGraphDef]  )  )
 
 (import-statics)
