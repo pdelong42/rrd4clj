@@ -18,7 +18,7 @@ Documentation
 License
 -------------
 
-Copyright (c) 2010 Mitsutoshi Aoe and released under New BSD Lisence.
+Copyright (c) 2010-2015 Mitsutoshi Aoe and released under New BSD Lisence.
 
 ToDo
 -------------
