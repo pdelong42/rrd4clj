@@ -15,17 +15,26 @@ Documentation
 - [API Reference](http://maoe.github.com/rrd4clj/autodoc/)
 - [MinMax demo](http://github.com/maoe/rrd4clj/blob/master/src/clj/rrd4clj/examples.clj)
 
-Custom RRD4J
--------------
-
-[RRD4J used in rrd4clj](http://github.com/maoe/rrd4j) has been modified from
-[the original distribution](https://rrd4j.dev.java.net/). The changes are below:
-
-- add anti-aliasing support for texts
-- ...
-
 License
 -------------
 
 Copyright (c) 2010 Mitsutoshi Aoe and released under New BSD Lisence.
 
+ToDo
+-------------
+
+ - migrate away from clojure-contrib, since it's deprecated (mostly
+   done, but still using import-static)
+
+ - figure-out what's wrong with "with-rrd"
+
+ - clean-up the use/require statements
+
+ - write more unit tests
+
+ - figure-out how to generate the API reference (using either Autodoc,
+   or some equivalent tool), and put it on a github-pages site
+
+ - ask Mitsutoshi if he's amenable to changing the license and/or
+   dropping his copyright (I'm assuming he doesn't want to maintain
+   the code any more, but I'll try a pull-request anyway - can't hurt)

@@ -1,3 +1,0 @@
-[submodule "modules/rrd4j"]
-	path = modules/rrd4j
-	url = git://github.com/maoe/rrd4j.git

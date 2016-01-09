@@ -1,14 +1,16 @@
 (ns rrd4clj.io
-  (:use funky)
-  (:use rrd4clj.core
-        rrd4clj.imports)
-  (:import [org.rrd4j.core RrdDb]
-           [java.io File IOException]
-           [java.lang IllegalArgumentException]))
+   (:use
+      rrd4clj.core
+      rrd4clj.imports  )
+   (:import
+      [java.io File IOException]
+      java.lang.IllegalArgumentException
+      org.rrd4j.core.RrdDb
+      [org.rrd4j.graph RrdGraph RrdGraphDef]  )  )
 
-(import-all)
+(import-statics)
 
-;; (defn fetch
+;; (defn rrd_fetch
 ;;   "Fetches data from RRD"
 ;;   [#^RrdDb rrd
 ;;    #^ConsolFun consol-fn
@@ -18,8 +20,7 @@
 ;;    (.createFetchRequest rrd consol-fn start-time end-time)))
 
 ;; new API
-(defprotocol RRD
-  (instantiate [x]))
+(defprotocol RRD (instantiate [x]))
 
 (deftype OpenRRD [path read-only?]
   RRD
@@ -39,19 +40,15 @@
   (instantiate [x]
     (RrdDb. path external-path)))
 
-;; io/open
-(defn open
+(defn rrd_open
   ([path]
-     (instantiate (OpenRRD path false)))
+     (instantiate (->OpenRRD path false)))
   ([path read-only?]
-     (instantiate (OpenRRD path read-only?))))
+     (instantiate (->OpenRRD path read-only?))))
 
-;; io/create
-(def create
-  (comp instantiate CreateRRD))
+(def rrd_create (comp instantiate CreateRRD))
 
-;; io/update
-(defn update
+(defn rrd_update
   "Updates RRD"
   [rrd & samples]
   (doseq [s samples]
@@ -65,8 +62,8 @@
            (println "io error in update" e)))))
 
 ;; io/import
-;; io/graph
-(defn graph
+
+(defn rrd_graph
   "Draws a graph"
   [#^RrdGraphDef gr]
   (RrdGraph. gr))
