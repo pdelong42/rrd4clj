@@ -1,4 +1,4 @@
-(defproject org.clojars.maoe/rrd4clj "1.0.0-SNAPSHOT"
+(defproject org.clojars.maoe/rrd4clj "1.0.0"
    :description "RRD API for Clojure"
    :dependencies
    [  [org.clojure/clojure         "1.7.0"]
