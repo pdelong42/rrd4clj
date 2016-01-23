@@ -9,7 +9,7 @@ Installation
 To include rrd4clj in your Leiningen project, add the following
 dependency to your ``project.clj``:
 
-    [org.clojars.maoe/rrd4clj "0.0.0-SNAPSHOT"]
+    [org.clojars.pdelong/rrd4clj "1.0.2"]
 
 Warning: the above is an old version of the code.  Ownership of this
 repository has recently changed hands to me, and I need to make time
@@ -20,12 +20,13 @@ Documentation
 -------------
 
 - [API Reference](http://maoe.github.com/rrd4clj/autodoc/)
-- [MinMax demo](http://github.com/maoe/rrd4clj/blob/master/src/clj/rrd4clj/examples.clj)
+- [MinMax demo](http://github.com/pdelong/rrd4clj/blob/master/src/clj/rrd4clj/examples.clj)
 
 License
 -------------
 
 Copyright (c) 2010-2015 Mitsutoshi Aoe and released under New BSD Lisence.
+Copyright (c) 2016 Paul DeLong and released under New BSD Lisence.
 
 ToDo
 -------------
@@ -43,9 +44,3 @@ ToDo
 
  - figure-out how to generate the API reference (using either Autodoc,
    or some equivalent tool), and put it on a github-pages site
-
- - [DONE] ask Mitsutoshi if he's amenable to changing the license
-   and/or dropping his copyright (I'm assuming he doesn't want to
-   maintain the code any more, but I'll try a pull-request anyway -
-   can't hurt).
-   - Mitsutoshi merged the pull-req and transferred ownership to me.
